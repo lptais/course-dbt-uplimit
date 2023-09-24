@@ -8,8 +8,8 @@ SELECT
 a.order_id, 
 a.user_id, 
 a.promo_id,
-c.discount as promo_discount,
-c.status as promo_status,
+b.discount,
+b.status as promo_status,
 a.address_id,
 DATE(a.created_at) as order_date,
 a.order_cost, 
@@ -19,13 +19,9 @@ a.shipping_service,
 a.shipping_cost,
 DATE(a.estimated_delivery_at) as estimated_delivery_at,
 DATE(a.delivered_at) as delivered_at,
- order_status,
-b.product_id,
-b.quantity
-
+DATEDIFF(day, a.estimated_delivery_at, a.delivered_at) as days_for_delivery,
+order_status
 
 FROM {{ ref('stg_orders') }}  a
-LEFT JOIN {{ ref('stg_order_items') }}  b
-ON a.order_id = b.order_id
-LEFT JOIN {{ ref('stg_promos') }} c
-ON a.promo_id = c.promo_id
+LEFT JOIN {{ ref('stg_promos') }}  b 
+on a.promo_id=b.promo_id
