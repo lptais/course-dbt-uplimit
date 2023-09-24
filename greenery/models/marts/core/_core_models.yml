@@ -21,7 +21,8 @@ models:
         tests:
           - unique
           - not_null
-      - name: quantity
+      - name: order_total
         tests:
           - positive_values
+      
   
