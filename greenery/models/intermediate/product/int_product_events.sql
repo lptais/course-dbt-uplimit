@@ -6,13 +6,13 @@
 
 
 SELECT
+a.product_id,
+b.name as product_name,
 a.event_id, 
 a.session_id,
 a.event_type,
 DATE(a.created_at) as created_at,
-a.order_id,
-a.product_id,
-b.name as product_name
+a.order_id
 
 
 FROM {{ ref('stg_events') }}  a
